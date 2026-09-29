@@ -1,0 +1,22 @@
+[workspace]
+resolver = "3"
+members = ["crates/rdf-repository-shacl", "crates/rdf-repository-export", "crates/rdf-repository-task"]
+
+[workspace.dependencies]
+hashlink = "0.10.0"
+markdown = "1.0.0"
+mdast_util_to_markdown = "0.0.2"
+oxrdf = { version = "0.3", features = ["rdf-12"] }
+oxrdfio = { version = "0.2", features = ["rdf-12"] }
+pulldown-cmark = { version = "0.13", default-features = false }
+rdf-trilith-graph = { path = "../rdf-trilith/crates/rdf-trilith-graph" }
+rdf-trilith-iri = { path = "../rdf-trilith/crates/rdf-trilith-iri" }
+rdf-trilith-term = { path = "../rdf-trilith/crates/rdf-trilith-term" }
+saphyr = "0.0.6"
+serde_json = "1"
+serde_yaml = "0.9"
+snafu = "0.8"
+thiserror = "2"
+tree-sitter = "0.26"
+tree-sitter-language = "0.1"
+tree-sitter-turtle = { path = "../tree-sitter-rdf/tree-sitter-rdf12-turtle" }

@@ -1,0 +1,49 @@
+profile := 'debug'
+release := if profile == 'release' { "--release" } else { "" }
+
+build:
+    cargo build {{ release }}
+
+run *ARGS:
+    cargo run {{ release }} -- {{ ARGS }}
+
+test:
+    cargo test
+
+convert-wiki:
+    cargo run {{ release }} -- \
+        --wiki-dir ~/cloud/wiki \
+        --base https://wiki.dziw.is/ \
+        -o ~/cloud/wiki.ttl
+
+lint:
+    cargo +nightly fmt --check
+    cargo +nightly clippy -- -D warnings -W clippy::cognitive_complexity -W clippy::excessive_nesting
+    cargo +nightly udeps
+
+install-dev-dependencies:
+    rustup install nightly
+    rustup component add rustfmt clippy --toolchain nightly
+    cargo install --locked cargo-udeps
+
+pre-commit-check: lint test
+
+install:
+    cargo install --path .
+
+fuseki: convert-wiki
+    podman stop wiki-fuseki 2>/dev/null || true
+    podman rm -f wiki-fuseki 2>/dev/null || true
+    podman run -d \
+        --name wiki-fuseki \
+        -p 3030:3030 \
+        -v ~/cloud/wiki.ttl:/staging/wiki.ttl:ro \
+        --entrypoint /jena-fuseki/fuseki-server \
+        docker.io/stain/jena-fuseki \
+        --file=/staging/wiki.ttl /wiki
+    @echo "SPARQL endpoint: http://localhost:3030/wiki/sparql"
+    @echo "Fuseki UI: http://localhost:3030/"
+
+fuseki-stop:
+    podman stop wiki-fuseki
+    podman rm wiki-fuseki

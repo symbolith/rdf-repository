@@ -1,0 +1,11 @@
+[package]
+name = "rdf-repository-shacl"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+oxrdf = { workspace = true }
+thiserror = { workspace = true }
+tree-sitter = { workspace = true }
+tree-sitter-language = { workspace = true }
+tree-sitter-turtle = { workspace = true }

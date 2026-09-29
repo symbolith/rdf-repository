@@ -1,0 +1,19 @@
+[package]
+name = "rdf-repository-export"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Convert Obsidian wiki to RDF/Turtle"
+
+[dependencies]
+oxrdf = { workspace = true }
+oxrdfio = { workspace = true }
+pulldown-cmark = { workspace = true }
+rdf-trilith-graph = { workspace = true, features = ["oxrdf"] }
+rdf-trilith-iri = { workspace = true }
+rdf-trilith-term = { workspace = true, features = ["oxrdf"] }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+snafu = { workspace = true }
+tree-sitter = { workspace = true }
+tree-sitter-turtle = { workspace = true }

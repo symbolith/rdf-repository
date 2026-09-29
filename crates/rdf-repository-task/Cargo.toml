@@ -1,0 +1,10 @@
+[package]
+name = "rdf-repository-task"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+hashlink = { workspace = true }
+markdown = { workspace = true }
+mdast_util_to_markdown = { workspace = true }
+saphyr = { workspace = true }

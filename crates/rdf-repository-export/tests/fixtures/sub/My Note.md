@@ -1,0 +1,1 @@
+See [minimal](minimal.md).

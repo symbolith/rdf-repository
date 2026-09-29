@@ -1,0 +1,48 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cargo +nightly clippy:*)",
+      "Bash(cargo +nightly fmt:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo check:*)",
+      "Bash(cargo insta accept:*)",
+      "Bash(cargo run:*)",
+      "Bash(cargo search:*)",
+      "Bash(cargo test:*)",
+      "Bash(cat:*)",
+      "Bash(claude session:*)",
+      "Bash(claude web-search:*)",
+      "Bash(curl -sL \"http://archivo.dbpedia.org/download?o=*)",
+      "Bash(find:*)",
+      "Bash(gh search:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git status:*)",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "Bash(just:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(npx tsc:*)",
+      "Bash(podman logs:*)",
+      "Bash(python3:*)",
+      "Bash(sed:*)",
+      "Bash(sort:*)",
+      "Bash(tr:*)",
+      "Bash(uv --version)",
+      "Bash(wc:*)",
+      "Bash(xargs cat:*)",
+      "mcp__drawio-mcp-server__add-edge",
+      "mcp__drawio-mcp-server__add-rectangle",
+      "mcp__drawio-mcp-server__delete-cell-by-id",
+      "mcp__drawio-mcp-server__edit-cell",
+      "mcp__drawio-mcp-server__edit-edge",
+      "mcp__drawio-mcp-server__list-layers",
+      "mcp__drawio-mcp-server__list-paged-model"
+    ]
+  },
+  "enabledPlugins": {
+    "exogram@acts": true
+  }
+}
