@@ -42,6 +42,24 @@
       "mcp__drawio-mcp-server__list-paged-model"
     ]
   },
+  "sandbox": {
+    "excludedCommands": [
+      "just *"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/repositories/symbolith-exogram/exogram/scripts/guard_gws.py"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "exogram@acts": true
   }
