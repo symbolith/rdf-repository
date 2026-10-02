@@ -6,6 +6,7 @@ type:
   - "[Type Entity](20260923123011.md)"
 subject:
   - "[Project Implement rdf-repository](01M3N4VNX5Z34YXD1TD5B2W189.md)"
+  - "[Software RDF Repository](20260409165529.md)"
 comment: Tooling for building knowledge graphs from markdown files with frontmatter.
 wasAttributedTo:
   - "[Symbolith](20260816134144.md)"
