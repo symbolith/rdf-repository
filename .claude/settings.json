@@ -57,6 +57,15 @@
             "command": "python3 ~/repositories/symbolith-exogram/exogram/scripts/guard_gws.py"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/repositories/symbolith-exogram/exogram/scripts/guard_canon.py"
+          }
+        ]
       }
     ]
   },
