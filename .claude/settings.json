@@ -44,7 +44,8 @@
   },
   "sandbox": {
     "excludedCommands": [
-      "just *"
+      "just *",
+      "podman *"
     ]
   },
   "hooks": {
@@ -64,6 +65,17 @@
           {
             "type": "command",
             "command": "python3 ~/repositories/symbolith-exogram/exogram/scripts/guard_canon.py"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/repositories/symbolith-exogram/exogram/scripts/validate_note.py"
           }
         ]
       }
