@@ -25,7 +25,6 @@
       "Bash(ls:*)",
       "Bash(mkdir:*)",
       "Bash(npx tsc:*)",
-      "Bash(podman logs:*)",
       "Bash(python3:*)",
       "Bash(sed:*)",
       "Bash(sort:*)",
@@ -40,13 +39,22 @@
       "mcp__drawio-mcp-server__edit-edge",
       "mcp__drawio-mcp-server__list-layers",
       "mcp__drawio-mcp-server__list-paged-model"
+    ],
+    "ask": [
+      "Bash(git -C * commit *)",
+      "Bash(git -C * merge *)",
+      "Bash(git -C * push *)"
     ]
   },
   "sandbox": {
     "excludedCommands": [
-      "just *",
-      "podman *"
-    ]
+      "just *"
+    ],
+    "filesystem": {
+      "allowWrite": [
+        ".."
+      ]
+    }
   },
   "enabledPlugins": {
     "exogram@acts": true
