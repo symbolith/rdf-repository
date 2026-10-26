@@ -11,6 +11,54 @@ isPartOf:
 vetting: unread
 ---
 
+## Working On
+
+<!-- dataview-serializer-js:
+const pages = dv.pages();
+const refers = (value, id) => String(value).includes(id + ".md");
+const markers = {intended: " ", ready: ">", recovering: "!", claimed: "/", succeeded: "x", failed: "-"};
+const statesOf = page => {
+  const values = [page.hasActState ?? page.hasFactorState ?? []].flat();
+  return values.length ? values : ["intended"];
+};
+const stateOf = page => ["failed", "succeeded", "canceled", "claimed", "recovering", "ready", "intended"]
+  .find(state => statesOf(page).includes(state));
+const generated = ["Working On", "Next Enactables", "Enactables"];
+const line = act => "- [" + (markers[stateOf(act)] ?? " ") + "] [" + act.file.aliases[0] + "](" + act.file.name + ".md)";
+const todos = act => act.file.tasks.array()
+  .filter(task => !generated.includes(task.section.subpath));
+const byAlias = (left, right) => left.file.aliases[0].localeCompare(right.file.aliases[0]);
+const followed = act => pages
+  .where(page => refers(act.follows, page.file.name)).array();
+const membersOf = name => pages
+  .where(page => refers(page.isPartOf, name)).array();
+const members = [];
+const queue = [dv.current().file.name];
+while (queue.length) {
+  for (const page of membersOf(queue.pop())) {
+    if (!members.some(known => known.file.name === page.file.name)) {
+      members.push(page);
+      queue.push(page.file.name);
+    }
+  }
+}
+const candidates = [...new Map(
+  [dv.current(), ...members].flatMap(act => followed(act)).concat(members)
+    .map(page => [page.file.name, page])
+).values()];
+const checkboxes = (act, depth) => todos(act)
+  .filter(task => !task.completed)
+  .map(task => "    ".repeat(depth) + "- [ ] " + task.text);
+dv.paragraph(candidates
+  .filter(act => ["claimed", "recovering"].includes(stateOf(act)) && !membersOf(act.file.name).length)
+  .sort(byAlias)
+  .flatMap(act => [
+    line(act),
+    ...checkboxes(act, 1),
+  ])
+  .join("\n"));
+ -->
+
 ## Next Enactables
 
 <!-- dataview-serializer-js:
@@ -23,21 +71,31 @@ const statesOf = page => {
 };
 const stateOf = page => ["failed", "succeeded", "canceled", "claimed", "recovering", "ready", "intended"]
   .find(state => statesOf(page).includes(state));
-const generated = ["Next Enactables", "Enactables"];
+const generated = ["Working On", "Next Enactables", "Enactables"];
 const line = act => "- [" + (markers[stateOf(act)] ?? " ") + "] [" + act.file.aliases[0] + "](" + act.file.name + ".md)";
 const todos = act => act.file.tasks.array()
   .filter(task => !generated.includes(task.section.subpath));
 const byAlias = (left, right) => left.file.aliases[0].localeCompare(right.file.aliases[0]);
-const required = act => pages
+const followed = act => pages
   .where(page => refers(act.follows, page.file.name)).array();
-const members = pages
-  .where(page => refers(page.isPartOf, dv.current().file.name)).array();
+const membersOf = name => pages
+  .where(page => refers(page.isPartOf, name)).array();
+const members = [];
+const queue = [dv.current().file.name];
+while (queue.length) {
+  for (const page of membersOf(queue.pop())) {
+    if (!members.some(known => known.file.name === page.file.name)) {
+      members.push(page);
+      queue.push(page.file.name);
+    }
+  }
+}
 const candidates = [...new Map(
-  [dv.current(), ...members].flatMap(act => required(act)).concat(members)
+  [dv.current(), ...members].flatMap(act => followed(act)).concat(members)
     .map(page => [page.file.name, page])
 ).values()];
 const isCandidate = act => candidates.some(page => page.file.name === act.file.name);
-const preceded = act => required(act)
+const preceded = act => followed(act)
   .some(page => isCandidate(page) && stateOf(page) !== "succeeded");
 const checkboxes = (act, depth) => todos(act)
   .filter(task => !task.completed)
@@ -45,7 +103,7 @@ const checkboxes = (act, depth) => todos(act)
 dv.paragraph([
   ...checkboxes(dv.current(), 0),
   ...candidates
-    .filter(act => stateOf(act) !== "succeeded" && !preceded(act))
+    .filter(act => ["intended", "ready"].includes(stateOf(act)) && !membersOf(act.file.name).length && !preceded(act))
     .sort(byAlias)
     .flatMap(act => [
       line(act),
@@ -66,20 +124,32 @@ const statesOf = page => {
 };
 const stateOf = page => ["failed", "succeeded", "canceled", "claimed", "recovering", "ready", "intended"]
   .find(state => statesOf(page).includes(state));
-const generated = ["Next Enactables", "Enactables"];
+const generated = ["Working On", "Next Enactables", "Enactables"];
 const line = act => "- [" + (markers[stateOf(act)] ?? " ") + "] [" + act.file.aliases[0] + "](" + act.file.name + ".md)";
 const todos = act => act.file.tasks.array()
   .filter(task => !generated.includes(task.section.subpath));
 const byAlias = (left, right) => left.file.aliases[0].localeCompare(right.file.aliases[0]);
-const required = act => pages
+const followed = act => pages
   .where(page => refers(act.follows, page.file.name)).array();
-const members = pages
-  .where(page => refers(page.isPartOf, dv.current().file.name)).array();
+const membersOf = name => pages
+  .where(page => refers(page.isPartOf, name)).array();
+const members = [];
+const queue = [dv.current().file.name];
+while (queue.length) {
+  for (const page of membersOf(queue.pop())) {
+    if (!members.some(known => known.file.name === page.file.name)) {
+      members.push(page);
+      queue.push(page.file.name);
+    }
+  }
+}
 const isMember = act => members.some(page => page.file.name === act.file.name);
-const unrequired = members
-  .filter(page => !members.some(act => refers(act.follows, page.file.name)));
-const roots = [...new Map(
-  [...required(dv.current()), ...unrequired].map(page => [page.file.name, page])
+const heads = act => {
+  const parts = membersOf(act.file.name);
+  return parts.filter(page => !parts.some(part => refers(part.follows, page.file.name)));
+};
+const children = act => [...new Map(
+  [...followed(act), ...heads(act)].map(page => [page.file.name, page])
 ).values()];
 const checkboxes = (act, depth) => todos(act)
   .map(task => "    ".repeat(depth) + "- " + (task.completed ? "[x] " : "[ ] ") + task.text);
@@ -89,10 +159,10 @@ const tree = (acts, depth, path) => acts
   .flatMap(page => [
     "    ".repeat(depth) + line(page),
     ...checkboxes(page, depth + 1),
-    ...(isMember(page) ? tree(required(page), depth + 1, [...path, page.file.name]) : []),
+    ...(isMember(page) ? tree(children(page), depth + 1, [...path, page.file.name]) : []),
   ]);
 dv.paragraph([
   ...checkboxes(dv.current(), 0),
-  ...tree(roots, 0, [dv.current().file.name]),
+  ...tree(children(dv.current()), 0, [dv.current().file.name]),
 ].join("\n"));
  -->
