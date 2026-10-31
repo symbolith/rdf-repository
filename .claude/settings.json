@@ -44,7 +44,16 @@
       "Bash(git -C * commit *)",
       "Bash(git -C * merge *)",
       "Bash(git -C * push *)"
+    ],
+    "deny": [
+      "SendFeedback"
     ]
+  },
+  "feedbackDrafts": "off",
+  "feedbackSurveyRate": 0,
+  "env": {
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
   },
   "sandbox": {
     "excludedCommands": [
